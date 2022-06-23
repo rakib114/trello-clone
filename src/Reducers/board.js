@@ -1,4 +1,4 @@
-export const boardReducer = (boards = [], action) => {
+export const boardReducer = (boards, action) => {
   switch (action.type) {
     case "CREATE_BOARD": {
       const board = {
