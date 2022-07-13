@@ -2,7 +2,7 @@ export const taskListReducer = (taskLIsts, action) => {
   switch (action.type) {
     case "CREATE_LIST": {
       const taskList = {
-        id: Date.now(),
+        id: action.payload.id,
         title: action.payload.title,
         tasks: [],
         boardId: action.payload.boardId,
@@ -28,11 +28,11 @@ export const taskListReducer = (taskLIsts, action) => {
         return taskList;
       });
     }
-    case "REMOVE_TASK_IF_FORM_LIST": {
+    case "REMOVE_TASK_ID_FORM_LIST": {
       return taskLIsts.map((list) => {
         if (list.id === action.payload.id) {
           list.tasks = list.tasks.filter(
-            (iteam) => iteam.id !== action.payload.taskId
+            (iteam) => iteam !== action.payload.taskId
           );
         }
         return list;
@@ -45,6 +45,15 @@ export const taskListReducer = (taskLIsts, action) => {
         }
         return list;
       });
+    }
+    case "SORT_TASK_ID_IN_LIST": {
+      const { targetIndex, sourceIndex, droppableId } = action.payload;
+      const targetList = taskLIsts.find(
+        (taskList) => taskList.id === droppableId
+      );
+      const tasks = targetList.tasks.splice(sourceIndex, 1);
+      targetList.tasks.splice(targetIndex, 0, ...tasks);
+      return [...taskLIsts];
     }
     default: {
       return taskLIsts;

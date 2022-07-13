@@ -20,15 +20,17 @@ const AddIteamForm = ({
       <div className="form-card">
         <form onSubmit={(e) => createHandler(e)}>
           <textarea
-            cols="30"
-            rows="2"
             autoFocus
             placeholder={
-              listForm ? "Enter The List Title" : "Enter a Title for this Task"
+              listForm ? "Enter the list title" : "Enter a title for this task"
             }
             value={title}
             onChange={onChangeHandler}
             className="form-textarea"
+            name=""
+            id=""
+            cols="30"
+            rows="2"
           ></textarea>
         </form>
       </div>
@@ -36,16 +38,20 @@ const AddIteamForm = ({
         <button
           className="add-button"
           onClick={(e) => {
-            createHandler();
+            // e.stopPropagation();
+            createHandler(e);
           }}
         >
-          {listForm ? "Add List" : "Add Task"}
+          {listForm ? "Add list" : "Add task"}
         </button>
         <img
-          src={crossIcon}
-          alt="Cross Icon"
+          onClick={(e) => {
+            // e.stopPropagation();
+            setEditMood(false);
+          }}
           className="form-icon"
-          onClick={setEditMood(false)}
+          src={crossIcon}
+          alt=""
         />
       </div>
     </div>
